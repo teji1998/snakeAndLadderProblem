@@ -13,12 +13,16 @@ WIN_POSITION=100;
 #Variables
 position=$START_POSITION
 playerTemp=0;
+diceCount=0;
 
 #To obtain numbers 1 to 6 on dice 
 diceRoll()
 {
 	dice=$(( 1 + ($RANDOM % 6) ))
 	echo " The result of the rolling of the dice is $dice "
+
+	#Count the number of times dice rolled
+	(( diceCount++ ))
 }
 
 
@@ -56,9 +60,11 @@ checkOption()
 	esac
 }
 
-
 #To play continuously to reach 100th position
 while [ $position -lt $WIN_POSITION ]
 do
 	checkOption
 done
+
+#Display the number of times dice rolled
+echo "The number of times the dice was rolled is : $diceCount "
