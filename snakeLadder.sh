@@ -44,3 +44,9 @@ checkOption()
 	esac
 }
 checkOption
+
+#To play continuously to reach 100th position
+while [ $position -lt 100 ]
+do
+	checkOption
+done
