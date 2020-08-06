@@ -4,6 +4,7 @@ echo "WELCOME TO SNAKE AND LADDER"
 
 #Initializing the constants
 START_POSITION=0;
+WIN_POSITION=100;
 PLAYERS=1;
 NO_PLAY=1;
 LADDER=2;
@@ -35,7 +36,7 @@ checkOption()
 			;;
 		$SNAKE)
 			position=$(( $position - $dice ))
-			if [ $position -lt 0 ]
+			if [ $position -lt $START_POSITION ]
 			then
 				position=$START_POSITION;
 			fi
@@ -46,7 +47,7 @@ checkOption()
 checkOption
 
 #To play continuously to reach 100th position
-while [ $position -lt 100 ]
+while [ $position -lt $WIN_POSITION ]
 do
 	checkOption
 done
