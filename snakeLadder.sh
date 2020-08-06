@@ -4,8 +4,13 @@ echo "WELCOME TO SNAKE AND LADDER"
 
 #Initializing the constants
 START_POSITION=0;
+<<<<<<< HEAD
 PLAYER_1=1;
 PLAYER_2=2;
+=======
+WIN_POSITION=100;
+PLAYERS=1;
+>>>>>>> UC4_playingCondition
 NO_PLAY=1;
 LADDER=2;
 SNAKE=3;
@@ -59,7 +64,12 @@ checkOption()
 			fi
 			;;
 		$SNAKE)
+<<<<<<< HEAD
 			if [ $tag -eq $PLAYER_1 ]
+=======
+			position=$(( $position - $dice ))
+			if [ $position -lt $START_POSITION ]
+>>>>>>> UC4_playingCondition
 			then
 				playerTemp=$(( $playerOnePosition - $dice ))
 				if [ $playerTemp -lt $START_POSITION ]
@@ -91,6 +101,7 @@ checkOption()
 	fi
 }
 
+<<<<<<< HEAD
 
 game(){
 	while :
@@ -118,3 +129,10 @@ then
 else
 	echo " Player two has won by rolling $diceCountTwo times"
 fi
+=======
+#To play continuously to reach 100th position
+while [ $position -lt $WIN_POSITION ]
+do
+	checkOption
+done
+>>>>>>> UC4_playingCondition
