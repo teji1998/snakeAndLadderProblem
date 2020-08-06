@@ -1,138 +1,76 @@
-#!/bin/bash
+#!/bin/bash 
 
-echo "WELCOME TO SNAKE AND LADDER"
+SNAKE=0
+NO_PLAY=1
+LADDER=2
+START_POSITION=0
+WIN_POSITION=100
 
-#Initializing the constants
-START_POSITION=0;
-<<<<<<< HEAD
-PLAYER_1=1;
-PLAYER_2=2;
-=======
-WIN_POSITION=100;
-PLAYERS=1;
->>>>>>> UC4_playingCondition
-NO_PLAY=1;
-LADDER=2;
-SNAKE=3;
-WIN_POSITION=100;
+diceCountOne=0
+diceCountTwo=0
+playerOnePosition=0
+playerTwoPosition=0
 
-#Variables
-position=0
-option=0
-dice=0
-playerTemp=0;
-diceCountOne=0;
-diceCountTwo=0;
-playerOnePosition=0;
-playerTwoPosition=0;
+echo "Welcome to Snake and Ladder"
 
+#function to change the player 1 and player 2 positions
+function checkOption(){
+	 local diceNumber=$1
+	 local option=$2
+	 local position=$3
+	 local currentResult=0
 
-
-#To check options for playing
-checkOption()
-{
-	tag=$1
-	dice=$2
-	option=$3
 	case $option in
-		$NO_PLAY)
-			if [ $tag -eq $PLAYER_1 ]
-			then
-				playerOnePosition=$playerOnePosition
-			else
-				playerTwoPosition=$playerTwoPosition
-			fi
-			;;
-		$LADDER)
-			if [ $tag -eq $PLAYER_1 ]
-			then
-				playerTemp=$(( $playerOnePosition + $dice ))
-				if [  $playerTemp -gt $WIN_POSITION ]
-				then 
-					playerOnePosition=$playerOnePosition;
-				else
-					playerOnePosition=$playerTemp;
-				fi
-			else
-				playerTemp=$(( $playerTwoPosition + $dice ))
-				if [  $playerTemp -gt $WIN_POSITION ]
-				then 
-					playerTwoPosition=$playerTwoPosition;
-				else
-					playerTwoPosition=$playerTemp;
-				fi
-			fi
-			;;
-		$SNAKE)
-<<<<<<< HEAD
-			if [ $tag -eq $PLAYER_1 ]
-=======
-			position=$(( $position - $dice ))
-			if [ $position -lt $START_POSITION ]
->>>>>>> UC4_playingCondition
-			then
-				playerTemp=$(( $playerOnePosition - $dice ))
-				if [ $playerTemp -lt $START_POSITION ]
-				then
-					playerOnePosition=$START_POSITION;
-				else
-					playerOnePosition=$playerTemp;
-				
-				fi
-			else
-				
-				playerTemp=$(( $playerTwoPosition - $dice ))
-				if [ $playerTemp -lt $START_POSITION ]
-				then
-					playerTwoPosition=$START_POSITION;
-				else
-					playerTwoPosition=$playerTemp;
-				
-				fi
-			fi
-				
-			;;
+	$LADDER) currentResult=$(( position + diceNumber ))
+		 if [ $currentResult -le $WIN_POSITION ]
+		 then
+			diceNumber=$(( RANDOM % 6 + 1))
+		  	position=$(( position + diceNumber ))
+		 fi
+		 ;;
+
+	$NO_PLAY) position=$position;;
+
+	$SNAKE)	currentResult=$(( position - diceNumber ))
+		if [ $currentResult -lt $START_POSITION ]
+		then
+			position=$START_POSITION
+		else
+			position=$currentResult
+		fi
+		;;
+
 	esac
-	if [ $tag -eq $PLAYER_1 ]
-	then
-		echo "Player 1 position" $playerOnePosition
-	else
-		echo "Player 2 position" $playerTwoPosition
-	fi
+	echo $position
 }
 
-<<<<<<< HEAD
-
-game(){
+#function to play snake and ladder game
+gameStarted(){
 	while :
 	do
 		((diceCountOne++))
-	 	checkOption $PLAYER_1 $(( RANDOM % 6 + 1)) $(( RANDOM % 3 ))      #for player one
-		
+	 	playerOnePosition="$(checkOption $(( RANDOM % 6 + 1)) $(( RANDOM % 3 ))  $playerOnePosition )" #function call for player 1
+
+		echo "Current position of player 1" $playerOnePosition
+		echo "Current position of player 2" $playerTwoPosition
+
 		if [ $playerOnePosition -eq $WIN_POSITION -o $playerTwoPosition -eq $WIN_POSITION ]
 		then
 				break #breaks the infinite loop if condition is true
 		fi
 
 		((diceCountTwo++))
-		checkOption $PLAYER_2 $(( RANDOM % 6 + 1)) $(( RANDOM % 3 ))      #for player two
-
+		playerTwoPosition="$(checkOption  $((RANDOM % 6 + 1)) $(( RANDOM % 3 )) $playerTwoPosition )" #function call for player 2
 	done
 }
 
-game
+gameStarted
 
-#to find the winner
 if [  $playerOnePosition -eq $WIN_POSITION ]
 then
-	echo " Player one has won by rolling $diceCountOne times"
+	echo "CONGRATS !! PLAYER 1 HAS WON THE GAME AND REACHED $playerOnePosition" 
+	echo "Dice Rolled " $diceCountOne "times for player 1 to win"
 else
-	echo " Player two has won by rolling $diceCountTwo times"
+	echo "CONGRATS !! PLAYER 2 HAS WON THE GAME AND REACHED $playerTwoPosition" 
+	echo "Dice Rolled " $diceCountTwo "times for player 2 to win"
 fi
-=======
-#To play continuously to reach 100th position
-while [ $position -lt $WIN_POSITION ]
-do
-	checkOption
-done
->>>>>>> UC4_playingCondition
